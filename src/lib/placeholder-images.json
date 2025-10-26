@@ -1,7 +1,7 @@
 {
   "suv": {
     "src": "https://picsum.photos/seed/suv/600/400",
-    "alt": "Black SUV"
+    "alt": "Black SUV being washed"
   },
   "inshortsLogo": {
     "src": "https://picsum.photos/seed/inshorts/32/32",
@@ -10,5 +10,25 @@
   "newsUpdateLogo": {
     "src": "https://picsum.photos/seed/newsupdate/40/40",
     "alt": "News Update Logo"
+  },
+  "wordWheel": {
+    "src": "https://picsum.photos/seed/wordwheel/400/200",
+    "alt": "Word Wheel game"
+  },
+  "crypto": {
+    "src": "https://picsum.photos/seed/crypto/80/60",
+    "alt": "Cryptocurrency coin"
+  },
+  "actor": {
+    "src": "https://picsum.photos/seed/actor/80/60",
+    "alt": "Indian actor portrait"
+  },
+  "city": {
+    "src": "https://picsum.photos/seed/city/80/60",
+    "alt": "Cityscape"
+  },
+  "isro": {
+    "src": "https://picsum.photos/seed/isro/80/60",
+    "alt": "ISRO mission control"
   }
 }

@@ -12,7 +12,7 @@ export default function NewsLayout({
 }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <Link href="/home" className="flex items-center gap-2">
