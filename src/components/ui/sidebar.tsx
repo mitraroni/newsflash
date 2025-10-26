@@ -340,4 +340,5 @@ export {
   SidebarSeparator,
   SidebarInset,
   SidebarTrigger,
+  SidebarProvider,
 }
