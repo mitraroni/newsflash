@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useEffect } from 'react';
 import {
   Bell,
   Home,
@@ -27,15 +29,34 @@ import {
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
+import { useUser } from '@/firebase';
+import { useRouter } from 'next/navigation';
 
 const navItems = [
   { href: '/admin', icon: Home, label: 'Dashboard' },
-  { href: '#', icon: Newspaper, label: 'News' },
+  { href: '/admin/news', icon: Newspaper, label: 'News' },
   { href: '#', icon: Users, label: 'Users' },
   { href: '#', icon: Settings, label: 'Settings' },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.push('/admin/login');
+    }
+  }, [user, isUserLoading, router]);
+
+  if (isUserLoading || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -115,7 +136,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <Button variant="secondary" size="icon" className="rounded-full">
                 <div className="h-8 w-8 rounded-full">
                   <Image
-                    src="https://picsum.photos/seed/admin/32/32"
+                    src={user.photoURL || "https://picsum.photos/seed/admin/32/32"}
                     alt="Admin avatar"
                     width={32}
                     height={32}
@@ -126,7 +147,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{user.displayName || 'My Account'}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>

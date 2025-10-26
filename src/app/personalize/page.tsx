@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { buttonVariants } from '@/components/ui/button';
 
 const GoogleIcon = () => (
   <svg
@@ -142,7 +143,8 @@ export default function PersonalizeFeed() {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: 'Could not sign in with Facebook. Please try again.',
+        description:
+          'Could not sign in with Facebook. Please check if it is enabled in the Firebase console.',
       });
     }
   };
