@@ -30,5 +30,25 @@
   "isro": {
     "src": "https://picsum.photos/seed/isro/80/60",
     "alt": "ISRO mission control"
+  },
+  "heist": {
+    "src": "https://picsum.photos/seed/heist/200/300",
+    "alt": "Infamous Heists Throughout History"
+  },
+  "climate": {
+    "src": "https://picsum.photos/seed/climate/200/300",
+    "alt": "Why 93% of India's climate losses remain uninsured"
+  },
+  "war": {
+    "src": "https://picsum.photos/seed/war/100/100",
+    "alt": "Tank in a desert"
+  },
+  "rupee": {
+    "src": "https://picsum.photos/seed/rupee/100/100",
+    "alt": "Indian Rupee symbol"
+  },
+  "putin": {
+    "src": "https://picsum.photos/seed/putin/100/100",
+    "alt": "Vladimir Putin"
   }
 }

@@ -14,6 +14,12 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import placeholderImages from '@/lib/placeholder-images.json';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 const notificationItems = [
   {
@@ -34,15 +40,26 @@ const notificationItems = [
 ];
 
 const insightItems = [
+  { image: 'heist', aiHint: 'dark hooded figure' },
+  { image: 'climate', aiHint: 'climate change poster' },
+  { image: 'city', aiHint: 'cityscape evening' },
+];
+
+const topicItems = [
   {
-    text: 'What is the new capital of Andhra Pradesh?',
-    image: 'city',
-    aiHint: 'cityscape evening',
+    title: 'War in Middle East',
+    image: 'war',
+    aiHint: 'war tank',
   },
   {
-    text: 'How did ISRO lose contact with Chandrayaan-2 lander?',
-    image: 'isro',
-    aiHint: 'space mission',
+    title: 'Indian Economy',
+    image: 'rupee',
+    aiHint: 'indian rupee symbol',
+  },
+  {
+    title: 'Russia-Ukraine War',
+    image: 'putin',
+    aiHint: 'politician portrait',
   },
 ];
 
@@ -69,7 +86,7 @@ export default function SearchPage() {
               src={wordWheel.src}
               alt={wordWheel.alt}
               fill
-              style={{objectFit: 'cover'}}
+              style={{ objectFit: 'cover' }}
               className="rounded-lg"
               data-ai-hint="word game"
             />
@@ -119,33 +136,74 @@ export default function SearchPage() {
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center justify-between mb-2">
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">Insights</h2>
           <Button variant="link" asChild>
             <Link href="/home/insights">VIEW ALL</Link>
           </Button>
         </div>
-        <div className="space-y-4">
-          {insightItems.map((item, index) => (
-            <React.Fragment key={index}>
-              <div className="flex items-center justify-between gap-4">
-                <p className="font-medium leading-tight">{item.text}</p>
+        <Carousel
+          opts={{
+            align: 'start',
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {insightItems.map((item, index) => (
+              <CarouselItem key={index} className="basis-1/2 md:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-[2/3] items-center justify-center p-0">
+                      <Image
+                        // @ts-ignore
+                        src={images[item.image].src}
+                        // @ts-ignore
+                        alt={images[item.image].alt}
+                        width={200}
+                        height={300}
+                        className="rounded-md object-cover w-full h-full"
+                        data-ai-hint={item.aiHint}
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="text-lg font-bold">Topics</h2>
+          <Button variant="link" asChild>
+            <Link href="/home/topics">VIEW ALL</Link>
+          </Button>
+        </div>
+        <ScrollArea className="w-full whitespace-nowrap">
+          <div className="flex w-max space-x-4">
+            {topicItems.map((item, index) => (
+              <div key={index} className="space-y-2 text-center w-28">
                 <Image
                   // @ts-ignore
                   src={images[item.image].src}
                   // @ts-ignore
                   alt={images[item.image].alt}
-                  width={80}
-                  height={60}
-                  className="rounded-md object-cover"
+                  width={100}
+                  height={100}
+                  className="rounded-md object-cover mx-auto"
                   data-ai-hint={item.aiHint}
                 />
+                <p className="text-sm font-medium whitespace-normal">
+                  {item.title}
+                </p>
               </div>
-              {index < insightItems.length - 1 && <Separator />}
-            </React.Fragment>
-          ))}
-        </div>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" className="invisible" />
+        </ScrollArea>
       </div>
     </div>
   );
