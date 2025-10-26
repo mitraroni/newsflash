@@ -35,36 +35,33 @@ export default function ScienceChaptersPage() {
   const router = useRouter();
 
   return (
-    <div className="bg-gradient-to-b from-blue-400 to-purple-500 min-h-screen">
-      <div className="text-center py-8 text-white">
-        <h1 className="text-2xl font-bold">Chapter Wise</h1>
-        <p className="text-xl">अध्यायवार</p>
-      </div>
-      <div className="bg-white rounded-t-3xl ">
-        <header className="bg-green-500 text-white flex items-center p-4 rounded-t-3xl">
+    <div className="bg-background min-h-screen">
+       <header className="bg-card text-foreground flex items-center p-4 border-b">
           <button onClick={() => router.back()} className="mr-4">
             <ArrowLeft className="h-6 w-6" />
           </button>
-          <h1 className="text-xl font-bold">Science</h1>
+          <div className="flex flex-col">
+            <h1 className="text-xl font-bold">Science</h1>
+            <p className="text-sm text-muted-foreground">Chapter Wise</p>
+          </div>
         </header>
         <main className="p-4 space-y-3">
           {chapterItems.map((item) => (
             <Link href={item.href} key={item.chapter}>
-              <Card className="rounded-lg shadow-md overflow-hidden">
+              <Card className="rounded-lg shadow-md overflow-hidden bg-card">
                 <CardContent className="p-3 flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4">
+                    <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center mr-4">
                       {item.chapter}
                     </div>
                     <p className="font-semibold">{item.title}</p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-gray-400" />
+                  <ChevronRight className="h-6 w-6 text-muted-foreground" />
                 </CardContent>
               </Card>
             </Link>
           ))}
         </main>
-      </div>
     </div>
   );
 }

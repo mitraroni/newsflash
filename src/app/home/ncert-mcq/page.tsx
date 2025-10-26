@@ -21,8 +21,8 @@ export default function NcertMcqPage() {
   const { quiz, feedback } = placeholderImages;
   const images = { quiz, feedback };
   return (
-    <div className="bg-white text-gray-900 min-h-screen">
-      <header className="bg-green-500 text-white flex items-center p-4 shadow-md">
+    <div className="bg-background text-foreground min-h-screen">
+      <header className="bg-card text-foreground flex items-center p-4 shadow-md border-b">
         <button onClick={() => router.back()} className="mr-4">
           <ArrowLeft className="h-6 w-6" />
         </button>
@@ -32,9 +32,9 @@ export default function NcertMcqPage() {
         <div className="grid grid-cols-2 gap-4">
           {mcqItems.map((item) => (
             <Link href={item.href} key={item.title}>
-              <Card className="rounded-lg shadow-lg overflow-hidden">
+              <Card className="rounded-lg shadow-lg overflow-hidden bg-card">
                 <CardContent className="p-0">
-                  <div className="bg-gray-100 flex justify-center items-center p-4">
+                  <div className="bg-muted flex justify-center items-center p-4">
                     <Image
                       // @ts-ignore
                       src={images[item.image].src}
@@ -47,7 +47,7 @@ export default function NcertMcqPage() {
                       data-ai-hint={images[item.image].aiHint}
                     />
                   </div>
-                  <div className="bg-green-500 text-white text-center p-2">
+                  <div className="bg-primary text-primary-foreground text-center p-2">
                     <p className="font-semibold">{item.title}</p>
                   </div>
                 </CardContent>

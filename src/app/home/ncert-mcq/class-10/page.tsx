@@ -42,43 +42,41 @@ export default function Class10Page() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-400 to-purple-500 min-h-screen">
-      <div className="bg-white rounded-b-3xl pb-8">
-        <header className="bg-green-500 text-white flex items-center p-4">
-          <button onClick={() => router.back()} className="mr-4">
-            <ArrowLeft className="h-6 w-6" />
-          </button>
-          <h1 className="text-xl font-bold">Class 10</h1>
-        </header>
-        <main className="p-4">
-          <div className="grid grid-cols-2 gap-4">
-            {subjectItems.map((item) => (
-              <Link href={item.href} key={item.title}>
-                <Card className="rounded-lg shadow-lg overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="bg-white flex justify-center items-center p-4 h-28">
-                      <Image
-                        // @ts-ignore
-                        src={images[item.image].src}
-                        // @ts-ignore
-                        alt={images[item.image].alt}
-                        width={80}
-                        height={80}
-                        className="object-contain"
-                        // @ts-ignore
-                        data-ai-hint={images[item.image].aiHint}
-                      />
-                    </div>
-                    <div className="bg-green-500 text-white text-center p-2 rounded-b-lg">
-                      <p className="font-semibold">{item.title}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </main>
-      </div>
+    <div className="bg-background min-h-screen">
+      <header className="bg-card text-foreground flex items-center p-4 border-b">
+        <button onClick={() => router.back()} className="mr-4">
+          <ArrowLeft className="h-6 w-6" />
+        </button>
+        <h1 className="text-xl font-bold">Class 10</h1>
+      </header>
+      <main className="p-4">
+        <div className="grid grid-cols-2 gap-4">
+          {subjectItems.map((item) => (
+            <Link href={item.href} key={item.title}>
+              <Card className="rounded-lg shadow-lg overflow-hidden bg-card">
+                <CardContent className="p-0">
+                  <div className="bg-muted flex justify-center items-center p-4 h-28">
+                    <Image
+                      // @ts-ignore
+                      src={images[item.image].src}
+                      // @ts-ignore
+                      alt={images[item.image].alt}
+                      width={80}
+                      height={80}
+                      className="object-contain"
+                      // @ts-ignore
+                      data-ai-hint={images[item.image].aiHint}
+                    />
+                  </div>
+                  <div className="bg-primary text-primary-foreground text-center p-2 rounded-b-lg">
+                    <p className="font-semibold">{item.title}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
