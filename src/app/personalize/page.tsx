@@ -72,7 +72,10 @@ export default function PersonalizeFeed() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex justify-end p-4">
-        <Link href="/home" className={cn(buttonVariants({ variant: 'ghost' }))}>
+        <Link
+          href="/home"
+          className={cn(buttonVariants({ variant: 'ghost' }))}
+        >
           Skip
         </Link>
       </div>
