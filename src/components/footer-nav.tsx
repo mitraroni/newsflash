@@ -11,7 +11,7 @@ export function FooterNav() {
   const pathname = usePathname();
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-background border-t border-border/50 shadow-t-lg z-20">
+    <footer className="fixed bottom-0 left-0 right-0 bg-background border-t z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-around">
         <Link
           href="/home/search"
@@ -47,7 +47,6 @@ export function FooterNav() {
           />
         </Link>
       </div>
-      <div className="w-32 h-1 bg-foreground rounded-full mx-auto mb-2"></div>
     </footer>
   );
 }
