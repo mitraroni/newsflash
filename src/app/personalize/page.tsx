@@ -1,6 +1,16 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { User } from 'lucide-react';
+import { Bell, Download, User } from 'lucide-react';
 import Link from 'next/link';
+import * as React from 'react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from '@/components/ui/carousel';
+import { cn } from '@/lib/utils';
 
 const GoogleIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -17,8 +27,43 @@ const FacebookIcon = () => (
   </svg>
 );
 
+const slides = [
+  {
+    icon: User,
+    text: 'Personalize your News Feed',
+  },
+  {
+    icon: Bell,
+    text: 'Get Trending News Alerts',
+  },
+  {
+    icon: Download,
+    text: 'Read News Offline',
+  },
+];
 
 export default function PersonalizeFeed() {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on('select', onSelect);
+
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex justify-end p-4">
@@ -28,15 +73,30 @@ export default function PersonalizeFeed() {
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center text-center px-4">
-        <User className="h-24 w-24 text-blue-500" />
-        <h1 className="mt-6 text-2xl font-bold text-foreground">
-          Personalize your News Feed
-        </h1>
-
+        <Carousel setApi={setApi} className="w-full max-w-xs">
+          <CarouselContent>
+            {slides.map((slide, index) => (
+              <CarouselItem key={index}>
+                <div className="flex flex-col items-center justify-center">
+                  <slide.icon className="h-24 w-24 text-blue-500" />
+                  <h1 className="mt-6 text-2xl font-bold text-foreground">
+                    {slide.text}
+                  </h1>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="mt-4 flex space-x-2">
-          <div className="h-2 w-2 rounded-full bg-blue-500"></div>
-          <div className="h-2 w-2 rounded-full bg-muted"></div>
-          <div className="h-2 w-2 rounded-full bg-muted"></div>
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className={cn('h-2 w-2 rounded-full', {
+                'bg-blue-500': i === current,
+                'bg-muted': i !== current,
+              })}
+            ></div>
+          ))}
         </div>
       </div>
 
