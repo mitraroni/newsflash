@@ -1,28 +1,26 @@
 'use client';
 import { NewsCard } from '@/components/news-card';
-import React, { useEffect, useState } from 'react';
-import { fetchNews, type NewsArticle } from '@/ai/flows/fetch-news-flow';
+import React from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, orderBy, limit } from 'firebase/firestore';
+import type { NewsArticle } from '@/ai/flows/fetch-news-flow';
+
+type StoredNewsArticle = NewsArticle & { id: string };
 
 export default function NewsUpdatePage() {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const firestore = useFirestore();
+  const articlesRef = useMemoFirebase(
+    () => (firestore ? collection(firestore, 'news_articles') : null),
+    [firestore]
+  );
+  const articlesQuery = useMemoFirebase(
+    () => (articlesRef ? query(articlesRef, orderBy('createdAt', 'desc'), limit(1)) : null),
+    [articlesRef]
+  );
 
-  useEffect(() => {
-    const loadNews = async () => {
-      try {
-        setIsLoading(true);
-        const newsArticles = await fetchNews({ count: 1 });
-        setArticles(newsArticles);
-      } catch (error) {
-        console.error('Failed to fetch news:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadNews();
-  }, []);
+  const { data: articles, isLoading } =
+    useCollection<StoredNewsArticle>(articlesQuery);
 
   return (
     <div className="pt-16">
@@ -32,12 +30,14 @@ export default function NewsUpdatePage() {
           <Skeleton className="h-[250px] w-full rounded-xl" />
           <div className="space-y-2">
             <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-6 w-3/tour" />
             <Skeleton className="h-12 w-full" />
           </div>
         </div>
+      ) : articles && articles.length > 0 ? (
+        <NewsCard article={articles[0]} />
       ) : (
-        articles.length > 0 && <NewsCard article={articles[0]} />
+        <p>No news found.</p>
       )}
     </div>
   );

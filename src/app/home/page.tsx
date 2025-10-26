@@ -3,33 +3,37 @@
 import { NewsCard } from '@/components/news-card';
 import { NotificationDialog } from '@/components/notification-dialog';
 import React, { useEffect, useState } from 'react';
-import { fetchNews, type NewsArticle } from '@/ai/flows/fetch-news-flow';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  useCollection,
+  useFirestore,
+  useMemoFirebase,
+} from '@/firebase';
+import { collection, query, orderBy, limit } from 'firebase/firestore';
+import type { NewsArticle } from '@/ai/flows/fetch-news-flow';
+
+type StoredNewsArticle = NewsArticle & { id: string };
 
 export default function HomePage() {
   const [showDialog, setShowDialog] = useState(false);
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const firestore = useFirestore();
+
+  const articlesRef = useMemoFirebase(
+    () => (firestore ? collection(firestore, 'news_articles') : null),
+    [firestore]
+  );
+  const articlesQuery = useMemoFirebase(
+    () => (articlesRef ? query(articlesRef, orderBy('createdAt', 'desc'), limit(5)) : null),
+    [articlesRef]
+  );
+
+  const { data: articles, isLoading } = useCollection<StoredNewsArticle>(articlesQuery);
 
   useEffect(() => {
     // Show the dialog after a short delay
     const timer = setTimeout(() => {
       setShowDialog(true);
     }, 1000);
-
-    const loadNews = async () => {
-      try {
-        setIsLoading(true);
-        const newsArticles = await fetchNews({ count: 5 });
-        setArticles(newsArticles);
-      } catch (error) {
-        console.error('Failed to fetch news:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadNews();
 
     return () => clearTimeout(timer);
   }, []);
@@ -51,7 +55,7 @@ export default function HomePage() {
            </div>
          </div>
         ) : (
-          articles.length > 0 && <NewsCard article={articles[0]} />
+          articles && articles.length > 0 && <NewsCard article={articles[0]} />
         )}
       </div>
       <NotificationDialog open={showDialog} onOpenChange={handleDialogClose} />

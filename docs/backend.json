@@ -60,12 +60,19 @@
           "description": "Link to the original article.",
           "format": "uri"
         },
-        "categoryIds": {
-          "type": "array",
-          "description": "References to Categories. (Relationship: Category N:N NewsArticle)",
-          "items": {
-            "type": "string"
-          }
+        "imageUrl": {
+          "type": "string",
+          "description": "A link to an image for the article.",
+          "format": "uri"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the news article (e.g., Politics, Tech)."
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the article was created."
         }
       },
       "required": [
@@ -73,7 +80,10 @@
         "title",
         "summary",
         "source",
-        "originalArticleLink"
+        "originalArticleLink",
+        "imageUrl",
+        "category",
+        "createdAt"
       ]
     },
     "Category": {
