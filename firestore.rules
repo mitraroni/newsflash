@@ -1,0 +1,118 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Controls access to user profile documents.
+     * @path /users/{userId}
+     * @allow (create) User with UID 'user123' creates a profile with id 'user123'.
+     * @allow (get, update, delete) User with UID 'user123' reads/updates/deletes their own profile ('user123').
+     * @deny (create, get, update, delete) User with UID 'user456' attempts to access user profile 'user123'.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId} {
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      allow get: if isSignedIn() && isOwner(userId);
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+    /**
+     * @description Controls access to user preference documents.
+     * @path /users/{userId}/preferences/{preferenceId}
+     * @allow (create) User with UID 'user123' creates a preference with userId 'user123'.
+     * @allow (get, update, delete) User with UID 'user123' reads/updates/deletes their own preference with userId 'user123'.
+     * @deny (create, get, update, delete) User with UID 'user456' attempts to access user preference of 'user123'.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/preferences/{preferenceId} {
+        function isOwner(userId) {
+          return request.auth.uid == userId;
+        }
+        function isSignedIn() {
+          return request.auth != null;
+        }
+        allow get: if isSignedIn() && isOwner(userId);
+        allow list: if false;
+        allow create: if isSignedIn() && isOwner(userId);
+        allow update: if isSignedIn() && isOwner(userId);
+        allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+    /**
+     * @description Controls access to category documents.
+     * @path /categories/{categoryId}
+     * @allow (get, list) Any authenticated user can read categories.
+     * @allow (create, update, delete) Only admins can create, update, or delete categories.
+     * @deny (create, update, delete) Non-admin user attempts to modify categories.
+     * @principle Public read, admin-only write.
+     */
+    match /categories/{categoryId} {
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && isAdmin();
+      allow update: if isSignedIn() && isAdmin();
+      allow delete: if isSignedIn() && isAdmin();
+    }
+
+    /**
+     * @description Controls access to news article documents.
+     * @path /news_articles/{articleId}
+     * @allow (get, list) Any authenticated user can read news articles.
+     * @allow (create, update, delete) Only admins can create, update, or delete news articles.
+     * @deny (create, update, delete) Non-admin user attempts to modify news articles.
+     * @principle Public read, admin-only write.
+     */
+    match /news_articles/{articleId} {
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && isAdmin();
+      allow update: if isSignedIn() && isAdmin();
+      allow delete: if isSignedIn() && isAdmin();
+    }
+
+    /**
+     * @description Controls access to admin role documents.
+     * @path /roles_admin/{userId}
+     * @allow (create) An admin can create a document with their own user ID.
+     * @allow (get) Anyone can check if a user is an admin.
+     * @deny (list, update, delete) Listing, updating, or deleting admin roles is not allowed.
+     * @principle Role-based access control.
+     */
+    match /roles_admin/{userId} {
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+      function isSelf(userId) {
+          return request.auth.uid == userId;
+      }
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      allow get: if isSignedIn();
+      allow list: if false;
+      allow create: if isSignedIn() && isSelf(userId) && isAdmin();
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
