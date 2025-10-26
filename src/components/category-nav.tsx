@@ -12,6 +12,7 @@ const categories = [
   { name: 'Videos', href: '/home/videos' },
   { name: 'Insights', href: '/home/insights' },
   { name: 'Google', href: '/home/google' },
+  { name: 'NCERT MCQ', href: '/home/ncert-mcq' },
 ];
 
 export function CategoryNav() {

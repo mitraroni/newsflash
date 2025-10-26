@@ -50,5 +50,15 @@
   "putin": {
     "src": "https://picsum.photos/seed/putin/100/100",
     "alt": "Vladimir Putin"
+  },
+  "quiz": {
+    "src": "https://picsum.photos/seed/quizicon/100/100",
+    "alt": "Quiz icon",
+    "aiHint": "quiz checklist"
+  },
+  "feedback": {
+    "src": "https://picsum.photos/seed/feedbackicon/100/100",
+    "alt": "Feedback icon",
+    "aiHint": "customer service"
   }
 }
