@@ -4,7 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const mcqItems = [
   { title: 'Class 8', image: 'quiz', href: '#' },
@@ -16,12 +17,15 @@ const mcqItems = [
 ];
 
 export default function NcertMcqPage() {
+  const router = useRouter();
   const { quiz, feedback } = placeholderImages;
   const images = { quiz, feedback };
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       <header className="bg-green-500 text-white flex items-center p-4 shadow-md">
-        <Menu className="h-6 w-6 mr-4" />
+        <button onClick={() => router.back()} className="mr-4">
+          <ArrowLeft className="h-6 w-6" />
+        </button>
         <h1 className="text-xl font-bold">NCERT MCQ</h1>
       </header>
       <main className="p-4">
