@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Bell, Download, User } from 'lucide-react';
+import { Bell, Download, User, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
 import {
@@ -39,6 +39,10 @@ const slides = [
   {
     icon: Download,
     text: 'Read News Offline',
+  },
+  {
+    icon: Newspaper,
+    text: 'Read Short News Summaries',
   },
 ];
 
