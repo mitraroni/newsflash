@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Language Selector',
-  description: 'Select your preferred language.',
+  title: 'News App',
+  description: 'A personalized news feed experience.',
 };
 
 export default function RootLayout({

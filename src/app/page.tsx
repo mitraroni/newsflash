@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Languages } from 'lucide-react';
+import Link from 'next/link';
 
 const languages = [
   { name: 'English', native: 'English' },
@@ -30,14 +30,15 @@ export default function LanguageSelector() {
 
         <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-md">
           {languages.map((lang) => (
-            <Button
-              key={lang.name}
-              variant="outline"
-              className="h-20 w-full flex flex-col items-center justify-center rounded-xl bg-card hover:bg-accent hover:text-accent-foreground"
-            >
-              <span className="text-2xl" style={{ fontFamily: "'Noto Sans', sans-serif" }}>{lang.native}</span>
-              <span className="text-sm text-muted-foreground">{lang.name}</span>
-            </Button>
+            <Link href="/personalize" key={lang.name} passHref>
+              <Button
+                variant="outline"
+                className="h-20 w-full flex flex-col items-center justify-center rounded-xl bg-card hover:bg-accent hover:text-accent-foreground"
+              >
+                <span className="text-2xl" style={{ fontFamily: "'Noto Sans', sans-serif" }}>{lang.native}</span>
+                <span className="text-sm text-muted-foreground">{lang.name}</span>
+              </Button>
+            </Link>
           ))}
         </div>
 
