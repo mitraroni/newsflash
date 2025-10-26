@@ -1,7 +1,7 @@
 'use client';
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -34,6 +34,7 @@ export function CategoryNav() {
             </Link>
           ))}
         </TabsList>
+        <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
     </Tabs>
   );
