@@ -11,7 +11,6 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
 
 const GoogleIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -72,12 +71,9 @@ export default function PersonalizeFeed() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex justify-end p-4">
-        <Link
-          href="/home"
-          className={cn(buttonVariants({ variant: 'ghost' }))}
-        >
-          Skip
-        </Link>
+        <Button variant="ghost" asChild>
+          <Link href="/home">Skip</Link>
+        </Button>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center text-center px-4">
@@ -130,7 +126,7 @@ export default function PersonalizeFeed() {
           </Link>{' '}
           and{' '}
           <Link href="#" className="underline">
-            T&C.
+            T&amp;C.
           </Link>
         </p>
       </div>
