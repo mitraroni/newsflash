@@ -9,8 +9,13 @@ import { Button } from '@/components/ui/button';
 import { Bookmark, Share2, MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { type NewsArticle } from '@/ai/flows/fetch-news-flow';
 
-export function NewsCard() {
+interface NewsCardProps {
+  article: NewsArticle;
+}
+
+export function NewsCard({ article }: NewsCardProps) {
   const suvImage = placeholderImages.suv;
   const inshortsLogo = placeholderImages.inshortsLogo;
   
@@ -19,18 +24,18 @@ export function NewsCard() {
       <CardHeader className="p-0">
         <div className="relative h-[250px] w-full">
           <Image
-            src={suvImage.src}
-            alt={suvImage.alt}
+            src={article.imageUrl || suvImage.src}
+            alt={article.title}
             fill
             style={{ objectFit: 'cover' }}
             className="rounded-lg"
-            data-ai-hint="suv car"
+            data-ai-hint="news article image"
           />
           <div className="absolute inset-0 bg-black/40 rounded-lg flex flex-col justify-start items-start p-4">
-            <div className='text-white'>
+            <a href={article.originalArticleLink} target="_blank" rel="noopener noreferrer" className='text-white'>
               <p className="text-lg">To watch the video</p>
               <p className="text-2xl font-bold">Tap here</p>
-            </div>
+            </a>
           </div>
         </div>
         <div className="flex items-center space-x-2 mt-4">
@@ -41,18 +46,15 @@ export function NewsCard() {
             height={24}
             className="rounded-sm"
           />
-          <span className="font-semibold text-sm">inshorts</span>
+          <span className="font-semibold text-sm">{article.source}</span>
         </div>
         <CardTitle className="text-lg font-bold leading-tight mt-2">
-          Video shows SUV which carries PM Modi being washed at local shop;
-          sparks safety concerns
+          {article.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0 mt-2">
         <CardDescription className="text-base text-foreground/80">
-          A video showing an SUV which carries Prime Minister Narendra Modi being
-          washed at a local shop has sparked safety concerns. PM Modi was seen
-          sitting in the same SUV in a picture that he shared in July this year.
+          {article.summary}
         </CardDescription>
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center space-x-2">
