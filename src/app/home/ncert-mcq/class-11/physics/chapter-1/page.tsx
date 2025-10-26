@@ -93,12 +93,12 @@ export default function McqPage() {
                 <p className="font-semibold">
                   Attempted Ques : {score.attempted}
                 </p>
-                <p className="flex items-center font-semibold">
-                  <CheckCircle2 className="h-5 w-5 text-primary mr-2" />
+                <p className="flex items-center font-semibold text-green-500">
+                   <span className="w-4 h-4 rounded-full bg-green-500 mr-2"></span>
                   Correct Ques : {score.correct}
                 </p>
-                <p className="flex items-center font-semibold">
-                  <XCircle className="h-5 w-5 text-destructive mr-2" />
+                <p className="flex items-center font-semibold text-red-500">
+                  <span className="w-4 h-4 rounded-full bg-red-500 mr-2"></span>
                   Incorrect Ques : {score.incorrect}
                 </p>
               </div>

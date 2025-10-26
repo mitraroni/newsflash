@@ -30,7 +30,7 @@ const questions = [
       { id: 'q2o3', text: '273K' },
       { id: 'q2o4', text: '373K' },
     ],
-    correctAnswer: 'q1o1',
+    correctAnswer: 'q2o1',
   },
 ];
 
