@@ -6,5 +6,9 @@
   "inshortsLogo": {
     "src": "https://picsum.photos/seed/inshorts/32/32",
     "alt": "inshorts logo"
+  },
+  "newsUpdateLogo": {
+    "src": "https://picsum.photos/seed/newsupdate/40/40",
+    "alt": "News Update Logo"
   }
 }

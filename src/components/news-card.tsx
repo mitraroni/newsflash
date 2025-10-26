@@ -26,6 +26,12 @@ export function NewsCard() {
             className="rounded-lg"
             data-ai-hint="suv car"
           />
+          <div className="absolute inset-0 bg-black/40 rounded-lg flex flex-col justify-start items-start p-4">
+            <div className='text-white'>
+              <p className="text-lg">To watch the video</p>
+              <p className="text-2xl font-bold">Tap here</p>
+            </div>
+          </div>
         </div>
         <div className="flex items-center space-x-2 mt-4">
           <Image

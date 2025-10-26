@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CategoryNav } from '@/components/category-nav';
 import { Newspaper } from 'lucide-react';
 import { Toaster } from '@/components/ui/toaster';
+import { FooterNav } from '@/components/footer-nav';
 
 export default function NewsLayout({
   children,
@@ -22,7 +23,8 @@ export default function NewsLayout({
           <CategoryNav />
         </div>
       </header>
-      <main className="container mx-auto px-4 py-4">{children}</main>
+      <main className="container mx-auto px-4 py-4 pb-20">{children}</main>
+      <FooterNav />
       <Toaster />
     </div>
   );
