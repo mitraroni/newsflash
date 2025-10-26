@@ -9,7 +9,7 @@ const chapterItems = [
   {
     chapter: 1,
     title: 'Chemical Reactions and Equations',
-    href: '#',
+    href: '/home/ncert-mcq/class-10/science/chapter-1',
   },
   { chapter: 2, title: 'Acids, Bases and Salts', href: '#' },
   { chapter: 3, title: 'Metals and Non-metals', href: '#' },
