@@ -73,7 +73,7 @@ const iconNavItems = [
 export default function SearchPage() {
   const { wordWheel, ...images } = placeholderImages;
   return (
-    <div className="pt-4 pb-20">
+    <div className="pt-4">
       <div className="relative mb-4">
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input placeholder="Search for news" className="pl-10" />
