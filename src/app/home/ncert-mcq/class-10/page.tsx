@@ -8,7 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const subjectItems = [
-  { title: 'Science', image: 'science', href: '#' },
+  { title: 'Science', image: 'science', href: '/home/ncert-mcq/class-10/science' },
   { title: 'Mathematics', image: 'mathematics', href: '#' },
   { title: 'History', image: 'history', href: '#' },
   { title: 'Political', image: 'political', href: '#' },
