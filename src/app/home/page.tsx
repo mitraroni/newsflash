@@ -23,7 +23,7 @@ export default function HomePage() {
     [firestore]
   );
   const articlesQuery = useMemoFirebase(
-    () => (articlesRef ? query(articlesRef, orderBy('createdAt', 'desc'), limit(5)) : null),
+    () => (articlesRef ? query(articlesRef, orderBy('createdAt', 'desc'), limit(1)) : null),
     [articlesRef]
   );
 

@@ -30,7 +30,7 @@ export default function NewsUpdatePage() {
           <Skeleton className="h-[250px] w-full rounded-xl" />
           <div className="space-y-2">
             <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-3/tour" />
+            <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-12 w-full" />
           </div>
         </div>
