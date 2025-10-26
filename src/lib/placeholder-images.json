@@ -1,0 +1,10 @@
+{
+  "suv": {
+    "src": "https://picsum.photos/seed/suv/600/400",
+    "alt": "Black SUV"
+  },
+  "inshortsLogo": {
+    "src": "https://picsum.photos/seed/inshorts/32/32",
+    "alt": "inshorts logo"
+  }
+}

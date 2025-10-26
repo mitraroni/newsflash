@@ -82,7 +82,7 @@ export default function PersonalizeFeed() {
             {slides.map((slide, index) => (
               <CarouselItem key={index}>
                 <div className="flex flex-col items-center justify-center">
-                  <slide.icon className="h-24 w-24 text-blue-500" />
+                  <slide.icon className="h-24 w-24 text-primary" />
                   <h1 className="mt-6 text-2xl font-bold text-foreground">
                     {slide.text}
                   </h1>
@@ -96,7 +96,7 @@ export default function PersonalizeFeed() {
             <div
               key={i}
               className={cn('h-2 w-2 rounded-full', {
-                'bg-blue-500': i === current,
+                'bg-primary': i === current,
                 'bg-muted': i !== current,
               })}
             ></div>
@@ -106,14 +106,18 @@ export default function PersonalizeFeed() {
 
       <div className="bg-card p-6 rounded-t-3xl">
         <div className="space-y-4">
-          <Button variant="outline" className="w-full">
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-          <Button className="w-full bg-[#1877F2] hover:bg-[#1877F2]/90 text-white">
-            <FacebookIcon />
-            Continue with Facebook
-          </Button>
+          <Link href="/home" passHref>
+            <Button variant="outline" className="w-full">
+              <GoogleIcon />
+              Continue with Google
+            </Button>
+          </Link>
+          <Link href="/home" passHref>
+            <Button className="w-full bg-[#1877F2] hover:bg-[#1877F2]/90 text-white">
+              <FacebookIcon />
+              Continue with Facebook
+            </Button>
+          </Link>
         </div>
         <p className="mt-6 text-center text-xs text-muted-foreground">
           By continuing, you accept the{' '}
