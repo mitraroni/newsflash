@@ -71,9 +71,9 @@ export default function PersonalizeFeed() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="flex justify-end p-4">
-        <Link href="/home">
-          <Button variant="ghost">Skip</Button>
-        </Link>
+        <Button variant="ghost" asChild>
+          <Link href="/home">Skip</Link>
+        </Button>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center text-center px-4">
@@ -106,18 +106,18 @@ export default function PersonalizeFeed() {
 
       <div className="bg-card p-6 rounded-t-3xl">
         <div className="space-y-4">
-          <Link href="/home" passHref>
-            <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" asChild>
+            <Link href="/home">
               <GoogleIcon />
               Continue with Google
-            </Button>
-          </Link>
-          <Link href="/home" passHref>
-            <Button className="w-full bg-[#1877F2] hover:bg-[#1877F2]/90 text-white">
+            </Link>
+          </Button>
+          <Button className="w-full bg-[#1877F2] hover:bg-[#1877F2]/90 text-white" asChild>
+            <Link href="/home">
               <FacebookIcon />
               Continue with Facebook
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
         <p className="mt-6 text-center text-xs text-muted-foreground">
           By continuing, you accept the{' '}
