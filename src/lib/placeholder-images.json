@@ -60,5 +60,45 @@
     "src": "https://picsum.photos/seed/feedbackicon/100/100",
     "alt": "Feedback icon",
     "aiHint": "customer service"
+  },
+  "science": {
+    "src": "https://picsum.photos/seed/scienceicon/80/80",
+    "alt": "Science icon",
+    "aiHint": "chemistry beakers"
+  },
+  "mathematics": {
+    "src": "https://picsum.photos/seed/mathicon/80/80",
+    "alt": "Mathematics icon",
+    "aiHint": "calculator math symbols"
+  },
+  "history": {
+    "src": "https://picsum.photos/seed/historyicon/80/80",
+    "alt": "History icon",
+    "aiHint": "scroll feather"
+  },
+  "political": {
+    "src": "https://picsum.photos/seed/politicalicon/80/80",
+    "alt": "Political icon",
+    "aiHint": "government building"
+  },
+  "economics": {
+    "src": "https://picsum.photos/seed/economicsicon/80/80",
+    "alt": "Economics icon",
+    "aiHint": "graph globe"
+  },
+  "geography": {
+    "src": "https://picsum.photos/seed/geographyicon/80/80",
+    "alt": "Geography icon",
+    "aiHint": "globe nature"
+  },
+  "hindi": {
+    "src": "https://picsum.photos/seed/hindiicon/80/80",
+    "alt": "Hindi icon",
+    "aiHint": "book open"
+  },
+  "english": {
+    "src": "https://picsum.photos/seed/englishicon/80/80",
+    "alt": "English icon",
+    "aiHint": "abc easel"
   }
 }

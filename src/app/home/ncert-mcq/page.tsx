@@ -9,7 +9,7 @@ import { Menu } from 'lucide-react';
 const mcqItems = [
   { title: 'Class 8', image: 'quiz', href: '#' },
   { title: 'Class 9', image: 'quiz', href: '#' },
-  { title: 'Class 10', image: 'quiz', href: '#' },
+  { title: 'Class 10', image: 'quiz', href: '/home/ncert-mcq/class-10' },
   { title: 'Class 11', image: 'quiz', href: '#' },
   { title: 'Class 12', image: 'quiz', href: '#' },
   { title: 'Feedback', image: 'feedback', href: '#' },
