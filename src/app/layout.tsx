@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'NewsFlash',
-  description: 'Your personalized news feed, summarized by AI.',
+  title: 'Language Selector',
+  description: 'Select your preferred language.',
 };
 
 export default function RootLayout({
@@ -22,14 +21,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">
-        {children}
-        <Toaster />
-      </body>
+      <body className="font-body antialiased">{children}</body>
     </html>
   );
 }
