@@ -23,7 +23,7 @@ export default function NewsLayout({
           <CategoryNav />
         </div>
       </header>
-      <main className="container mx-auto px-4 py-4 pb-20">{children}</main>
+      <main className="container mx-auto px-4 py-4 pb-24">{children}</main>
       <FooterNav />
       <Toaster />
     </div>
