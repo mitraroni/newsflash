@@ -12,7 +12,16 @@ export default async function CategoryPage({
   const { category } = params;
   const articles = await getArticles(category);
 
-  const validCategories = ['all', 'technology', 'sports', 'politics'];
+  const validCategories = [
+    'all',
+    'technology',
+    'sports',
+    'politics',
+    'finance',
+    'videos',
+    'insights',
+    'google',
+  ];
   if (!validCategories.includes(category.toLowerCase())) {
     notFound();
   }
@@ -23,7 +32,7 @@ export default async function CategoryPage({
   return (
     <div className="space-y-8">
       <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">
-        {categoryTitle} News
+        {categoryTitle === 'All' ? 'My Feed' : `${categoryTitle} News`}
       </h1>
       {articles.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">

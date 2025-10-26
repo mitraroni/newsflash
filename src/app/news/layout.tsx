@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Sidebar,
   SidebarContent,
-  SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';

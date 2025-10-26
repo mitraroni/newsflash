@@ -1,7 +1,14 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Landmark, LayoutGrid, Trophy, Cpu } from 'lucide-react';
+import {
+  Landmark,
+  LayoutGrid,
+  DollarSign,
+  PlayCircle,
+  Lightbulb,
+  Globe,
+} from 'lucide-react';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -10,10 +17,12 @@ import {
 import Link from 'next/link';
 
 const categories = [
-  { name: 'All', href: '/news/all', icon: LayoutGrid },
-  { name: 'Technology', href: '/news/technology', icon: Cpu },
-  { name: 'Sports', href: '/news/sports', icon: Trophy },
-  { name: 'Politics', href: '/news/politics', icon: Landmark },
+  { name: 'My Feed', href: '/news/all', icon: LayoutGrid },
+  { name: 'Delhi', href: '/news/politics', icon: Landmark },
+  { name: 'Finance', href: '/news/finance', icon: DollarSign },
+  { name: 'Videos', href: '/news/videos', icon: PlayCircle },
+  { name: 'Insights', href: '/news/insights', icon: Lightbulb },
+  { name: 'Google', href: '/news/google', icon: Globe },
 ];
 
 export function CategoryNav() {
