@@ -1,21 +1,22 @@
 /**
- * @fileoverview Firestore Security Rules for NewsFlash application.
- *
- * Core Philosophy:
- * This ruleset enforces a user-ownership model for user data and preferences,
- * while allowing public read access to news articles and categories.
+ * @file Overview
+ * This ruleset enforces a combination of user-based ownership and public read access with restricted write access.
  *
  * Data Structure:
- * - /users/{userId}: Stores personal user data, accessible only to the owning user.
- * - /news_articles/{newsArticleId}: Stores news articles, publicly readable, write access TBD (admin).
- * - /categories/{categoryId}: Stores news categories, publicly readable, write access TBD (admin).
- * - /user_preferences/{userPreferenceId}: Stores user preferences, accessible only to the owning user.
+ * - /users/{userId}: Stores private user data, accessible only to the authenticated user.
+ * - /news_articles/{newsArticleId}: Stores public news articles, readable by all, but writable by admins only (not yet implemented).
+ * - /categories/{categoryId}: Stores public category data, readable by all, but writable by admins only (not yet implemented).
+ * - /user_preferences/{userPreferenceId}: Stores user preferences, accessible only to the user who owns the preference.
  *
  * Key Security Decisions:
- * - Public read access to news articles and categories is allowed.
- * - User listing is implicitly disallowed by the absence of a top-level `list` rule on `/users`.
- * - Write access to news articles and categories is not yet defined (TODO: admin roles).
- * - Strict ownership is enforced for user documents and user preferences.
+ * - Users can only access their own data under /users/{userId}.
+ * - News articles and categories are publicly readable.
+ * - User preferences are only accessible to the owning user.
+ * - Listing of news articles is public.
+ *
+ * Denormalization for Authorization:
+ *  There is no denormalization in the current rules.  If the write rules for news articles were changed to allow user-generated content,
+ *  then the `NewsArticle` entity would need an `authorId` field.
  */
 rules_version = '2';
 service cloud.firestore {
@@ -24,77 +25,89 @@ service cloud.firestore {
     /**
      * @description Controls access to user documents.
      * @path /users/{userId}
-     * @allow (create) - If the user is creating their own document (auth.uid == userId).
-     * @allow (get, update, delete) - If the user is the owner of the document.
-     * @deny (create) - If the user is trying to create a document for another user.
-     * @deny (get, update, delete) - If the user is not the owner of the document.
-     * @principle Enforces document ownership for writes and reads.
+     * @allow (create) Signed-in user creates their own document.
+     * @allow (get, list, update, delete) Signed-in user accesses their own document.
+     * @deny (create) Signed-in user attempts to create a document with a mismatched user ID.
+     * @deny (get, list, update, delete) Signed-in user attempts to access another user's document.
+     * @principle Enforces user-based ownership.
      */
     match /users/{userId} {
-      // Allow users to create their own user document.
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
       allow create: if isSignedIn() && isOwner(userId) && request.resource.data.id == userId;
-      // Allow users to get, update, and delete their own user document.
-      allow get, update, delete: if isSignedIn() && isExistingOwner(userId) && resource.data.id == userId;
-      allow list: if false;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
     }
 
     /**
-     * @description Controls access to news articles. Read is public; write is restricted (TODO: admin roles).
+     * @description Controls access to news articles.
      * @path /news_articles/{newsArticleId}
-     * @allow (get, list) - Anyone can read news articles.
-     * @deny (create, update, delete) - No one can create, update, or delete news articles (TODO: Add admin role check).
-     * @principle Public read access with restricted writes (TODO: implement role-based writes).
+     * @allow (get, list) Any user can read news articles.
+     * @deny (create, update, delete) No user can create, update, or delete news articles without proper authorization (e.g., admin role - not yet implemented).
+     * @principle Allows public read access but restricts write access.
      */
     match /news_articles/{newsArticleId} {
-      allow get, list: if true;
-      allow create, update, delete: if false; // TODO: Add admin role validation
+      allow get: if true;
+      allow list: if true;
+      allow create: if false; // TODO: Add admin role check once implemented
+      allow update: if false; // TODO: Add admin role check once implemented
+      allow delete: if false; // TODO: Add admin role check once implemented
     }
 
     /**
-     * @description Controls access to categories.  Read is public; write is restricted (TODO: admin roles).
+     * @description Controls access to categories.
      * @path /categories/{categoryId}
-     * @allow (get, list) - Anyone can read categories.
-     * @deny (create, update, delete) - No one can create, update, or delete categories (TODO: Add admin role check).
-     * @principle Public read access with restricted writes (TODO: implement role-based writes).
+     * @allow (get, list) Any user can read category data.
+     * @deny (create, update, delete) No user can create, update, or delete categories without proper authorization (e.g., admin role - not yet implemented).
+     * @principle Allows public read access but restricts write access.
      */
     match /categories/{categoryId} {
-      allow get, list: if true;
-      allow create, update, delete: if false; // TODO: Add admin role validation
+      allow get: if true;
+      allow list: if true;
+      allow create: if false; // TODO: Add admin role check once implemented
+      allow update: if false; // TODO: Add admin role check once implemented
+      allow delete: if false; // TODO: Add admin role check once implemented
     }
 
     /**
      * @description Controls access to user preferences.
      * @path /user_preferences/{userPreferenceId}
-     * @allow (create) - If the user ID in the preference matches the authenticated user ID.
-     * @allow (get, update, delete) - If the user is the owner of the preference (userId matches auth.uid).
-     * @deny (create) - If the user ID in the preference does not match the authenticated user ID.
-     * @deny (get, update, delete) - If the user is not the owner of the preference.
-     * @principle Enforces ownership for user preferences.
+     * @allow (create) Signed-in user creates their own preference.
+     * @allow (get, list, update, delete) Signed-in user accesses their own preference.
+     * @deny (create) Signed-in user attempts to create a preference with a mismatched user ID.
+     * @deny (get, list, update, delete) Signed-in user attempts to access another user's preference.
+     * @principle Enforces user-based ownership for preferences.
      */
     match /user_preferences/{userPreferenceId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+        function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+        }
+
+      allow get: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.id == request.auth.uid;
+      allow list: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.id == request.auth.uid;
       allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      allow get, update, delete: if isSignedIn() && isExistingOwnerByUserId(resource.data.userId);
-    }
-
-    // ---- Helper functions ----
-
-    // Checks if the user is signed in.
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    // Checks if the requested user ID matches the authenticated user ID.
-    function isOwner(userId) {
-      return isSignedIn() && userId == request.auth.uid;
-    }
-
-    //Check if the user is signed in and is the owner, also check if resource exists.
-    function isExistingOwner(userId) {
-        return isSignedIn() && userId == request.auth.uid && resource != null;
-    }
-       //Check if the user is signed in and is the owner using userId of the resource data, also check if resource exists.
-    function isExistingOwnerByUserId(userId) {
-        return isSignedIn() && userId == request.auth.uid && resource != null;
+      allow update: if isExistingOwner(resource.data.userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(resource.data.userId);
     }
   }
 }
